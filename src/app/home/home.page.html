@@ -1,20 +1,64 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>Replace Subtitles</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size='8' offset='2'>
+        <ion-item>
+          <ion-label>Correct Timing</ion-label>
+          <ion-label>{{getCorrectTimingFileName()}}</ion-label>
+          <ion-button (click)='uploadCorrectTiming()' slot='end'>
+            <ion-icon slot='icon-only' name='cloud-upload-outline'></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size='8' offset='2'>
+        <ion-item>
+          <ion-label>Correct Language</ion-label>
+          <ion-label>{{getCorrectLanguageFileName()}}</ion-label>
+          <ion-button (click)='uploadCorrectLanguage()' slot='end'>
+            <ion-icon slot='icon-only' name='cloud-upload-outline'></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size='4' offset='2'>
+        <textarea readonly (scroll)='onCorrectLanguageTextAreaScrolled()' #correctLanguageTextArea [rows]='20'></textarea>
+      </ion-col>
+      <ion-col size='4'>
+        <textarea readonly (scroll)='onCorrectTimingTextAreaScrolled()' #correctTimingTextArea [rows]='20'></textarea>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size='8' offset='2'>
+        <ion-item>
+          <ion-label>Synchronize Scrolling</ion-label>
+          <ion-checkbox [(ngModel)]='synchronizeScrolling' slot='end'></ion-checkbox>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size='8' offset='2'>
+        <ion-item>
+          <ion-label>Start From</ion-label>
+          <ion-input [(ngModel)]='startFromIndex' inputmode='numeric' type='number' [min]='0' placeholder='Entry Number...'></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size='8' offset='2' class='ion-text-center'>
+        <ion-button [disabled]='shouldDisableActionButton()' (click)='startTransformation()'>Start</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+
+<input accept='.srt' #fileInputCorrectLanguage style='display: none;' type='file' />
+<input accept='.srt' #fileInputCorrectTiming style='display: none;' type='file' />
