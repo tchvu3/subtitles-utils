@@ -6,7 +6,7 @@ export class SrtHolder {
   constructor(rawSrt: string, fileName: string) {
     this.fileName = fileName.trim()
     this.rawSrt = rawSrt.trim().replace(/\r/g, '')
-    const rawEntries = this.rawSrt.split('\n\n')
+    const rawEntries = this.rawSrt.split('\n\n').filter((entry) => entry.length > 0)
     this.srtEntries = rawEntries.map((entry) => {
       const regexResult = entry.match(/(\d+)[^](\d+):(\d+):(\d+),(\d+) --> (\d+):(\d+):(\d+),(\d+)[^](.+)/)
       if (regexResult == null) {
